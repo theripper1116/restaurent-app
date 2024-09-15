@@ -1,7 +1,7 @@
-const RestaurentLogin = () => {
+const RestaurantLogin = () => {
   return (
     <>
-      <h3>Restaurent Login</h3>
+      <h3>Restaurant Login</h3>
       <div className="input-wrapper">
         <input
           className="input-field"
@@ -23,4 +23,4 @@ const RestaurentLogin = () => {
   );
 };
 
-export default RestaurentLogin;
+export default RestaurantLogin;

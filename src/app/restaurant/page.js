@@ -4,19 +4,19 @@ import { useState } from "react";
 
 import "./style.css";
 
-import RestaurentHeader from "../_components/RestaurentHeader";
-import RestaurentLogin from "../_components/RestaurentLogin";
-import RestaurentSignUp from "../_components/RestaurentSignUp";
-import RestaurentFooter from "./RestaurentFooter";
+import RestaurantHeader from "../_components/RestaurantHeader";
+import RestaurantLogin from "../_components/RestaurantLogin";
+import RestaurantSignUp from "../_components/RestaurantSignUp";
+import RestaurantFooter from "./RestaurantFooter";
 
 const Restaurent = () => {
   const [login, setLogin] = useState(true);
   return (
     <>
       <div className="container">
-        <RestaurentHeader />
+        <RestaurantHeader />
         <h2>Restaurant Login/SignUp Page</h2>
-        {login ? <RestaurentLogin /> : <RestaurentSignUp />}
+        {login ? <RestaurantLogin /> : <RestaurantSignUp />}
 
         <div>
           <button
@@ -29,7 +29,7 @@ const Restaurent = () => {
           </button>
         </div>
       </div>
-      <RestaurentFooter />
+      <RestaurantFooter />
     </>
   );
 };

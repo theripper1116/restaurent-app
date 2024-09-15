@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const RestaurentHeader = () => {
+const RestaurantHeader = () => {
   return (
     <div className="header-wrapper">
       <div className="logo">
@@ -24,4 +24,4 @@ const RestaurentHeader = () => {
   );
 };
 
-export default RestaurentHeader;
+export default RestaurantHeader;
