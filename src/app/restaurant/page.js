@@ -7,7 +7,7 @@ import "./style.css";
 import RestaurantHeader from "../_components/RestaurantHeader";
 import RestaurantLogin from "../_components/RestaurantLogin";
 import RestaurantSignUp from "../_components/RestaurantSignUp";
-import RestaurantFooter from "./RestaurantFooter";
+import RestaurantFooter from "../_components/RestaurantFooter";
 
 const Restaurent = () => {
   const [login, setLogin] = useState(true);
