@@ -11,18 +11,63 @@ const RestaurantSignUp = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
+  const [error, setError] = useState(false);
   const router = useRouter();
 
+  const validateSignUpFormData = () => {
+    const isValidated = false;
+    if (password !== c_password) {
+      alert("Password not match");
+      return false;
+    }
+    if (
+      !email ||
+      !password ||
+      !c_password ||
+      !name ||
+      !city ||
+      !address ||
+      !contact
+    ) {
+      alert("Please fill out all the forms fields to proceed");
+      return false;
+    }
+    if (!email.test(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim))
+      return false;
+    if (!password.test(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/))
+      return false;
+    if (
+      !contact.test(/^(?![ -])(?!.*[- ]$)(?!.*[- ]{2})[0-9- ]+$/) &&
+      contact.length !== 10
+    )
+      return false;
+    return true;
+  };
+
   const handleSignUpFormData = async () => {
-    let response = await fetch("http://localhost:3000/api/restaurant", {
-      method: "POST",
-      body: JSON.stringify({ email, password, name, city, address, contact }),
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      delete data.password;
-      localStorage.setItem("restaurantUser", JSON.stringify(data));
-      router.push("/restaurant/dashboard");
+    const isValidateSuccess = validateSignUpFormData();
+    if (isValidateSuccess) {
+      try {
+        let response = await fetch("http://localhost:3000/api/restaurant", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            password,
+            name,
+            city,
+            address,
+            contact,
+          }),
+        });
+        let data = await response.json();
+        if (response.status === 200) {
+          delete data.password;
+          localStorage.setItem("restaurantUser", JSON.stringify(data));
+          router.push("/restaurant/dashboard");
+        }
+      } catch (err) {
+        setError(err);
+      }
     }
   };
 
