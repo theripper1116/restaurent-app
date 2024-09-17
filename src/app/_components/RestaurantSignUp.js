@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import validateSignUpFormData from "../utils/validations/validateSignUpFormData";
+// import useSaveRestaurantInfo from "../utils/mongoDB/useSaveRestaurantInfo";
+
 const RestaurantSignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,39 +17,24 @@ const RestaurantSignUp = () => {
   const [error, setError] = useState(false);
   const router = useRouter();
 
-  const validateSignUpFormData = () => {
-    const isValidated = false;
-    if (password !== c_password) {
-      alert("Password not match");
-      return false;
-    }
-    if (
-      !email ||
-      !password ||
-      !c_password ||
-      !name ||
-      !city ||
-      !address ||
-      !contact
-    ) {
-      alert("Please fill out all the forms fields to proceed");
-      return false;
-    }
-    if (!email.test(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim))
-      return false;
-    if (!password.test(/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/))
-      return false;
-    if (
-      !contact.test(/^(?![ -])(?!.*[- ]$)(?!.*[- ]{2})[0-9- ]+$/) &&
-      contact.length !== 10
-    )
-      return false;
-    return true;
+  const formDataObj = {
+    email,
+    password,
+    c_password,
+    name,
+    city,
+    address,
+    contact,
   };
 
   const handleSignUpFormData = async () => {
-    const isValidateSuccess = validateSignUpFormData();
+    const isValidateSuccess = validateSignUpFormData(formDataObj);
     if (isValidateSuccess) {
+      // const response = await useSaveRestaurantInfo(formDataObj);
+      // console.log(response);
+      // if (response.status !== 200) {
+      //   setError(response.message);
+      // }
       try {
         let response = await fetch("http://localhost:3000/api/restaurant", {
           method: "POST",
@@ -73,68 +61,74 @@ const RestaurantSignUp = () => {
 
   return (
     <>
-      <h3>Restaurant SignUp</h3>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Enter email id"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="password"
-          placeholder="Enter password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="password"
-          placeholder="Confirm password"
-          onChange={(e) => setC_Password(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Enter Restaurent Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Enter City"
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Enter Full Address"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <input
-          className="input-field"
-          type="text"
-          placeholder="Enter Contact no."
-          onChange={(e) => setContact(e.target.value)}
-        />
-      </div>
-      <div>
-        <button className="button" onClick={() => handleSignUpFormData()}>
-          SignUp
-        </button>
-      </div>
+      {error ? (
+        <h3>{error}</h3>
+      ) : (
+        <>
+          <h3>Restaurant SignUp</h3>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Enter email id"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="password"
+              placeholder="Enter password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="password"
+              placeholder="Confirm password"
+              onChange={(e) => setC_Password(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Enter Restaurent Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Enter City"
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Enter Full Address"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Enter Contact no."
+              onChange={(e) => setContact(e.target.value)}
+            />
+          </div>
+          <div>
+            <button className="button" onClick={() => handleSignUpFormData()}>
+              SignUp
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 };

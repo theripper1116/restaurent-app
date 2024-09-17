@@ -11,8 +11,17 @@ export async function GET() {
 
 export async function POST(request) {
   let payload = await request.json();
+  let result;
   await mongoose.connect(connectionStr);
   let signUpFormData = new restaurantSchema(payload);
-  const result = await signUpFormData.save();
+
+  if (payload.login) {
+    result = await restaurantSchema.findOne({
+      email: payload.email,
+      password: payload.password,
+    });
+  } else {
+    result = await signUpFormData.save();
+  }
   return NextResponse.json(result);
 }
