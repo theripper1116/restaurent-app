@@ -6,8 +6,43 @@ const AddFoodItem = () => {
   const [path, setPath] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleAddFoodItem = () => {
-    console.log("inside handleAddFoodItem");
+  const validateAddFoodFormData = () => {
+    if (!name || !price || !path || !description) {
+      alert("Please fill out all Fields");
+      return false;
+    }
+  };
+
+  const handleAddFoodItem = async () => {
+    const isValidateSuccess = validateAddFoodFormData();
+    if (isValidateSuccess) {
+      const getCurrentRestaurantDetails = JSON.parse(
+        localStorage.getItem("restaurantUser")
+      );
+      if (getCurrentRestaurantDetails) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/restaurant/foods",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                name,
+                price,
+                imagePath: path,
+                description,
+                restaurantId: getCurrentRestaurantDetails._id,
+              }),
+            }
+          );
+          const data = await response.json();
+          if (response.status === 200) {
+            alert("Food Item Inserted successfully");
+          }
+        } catch (err) {
+          console.error(err.message);
+        }
+      }
+    }
   };
 
   return (
@@ -23,7 +58,7 @@ const AddFoodItem = () => {
       </div>
       <div className="input-wrapper">
         <input
-          type="text"
+          type="number"
           className="input-field"
           placeholder="Enter Price"
           onChange={(e) => setPrice(e.target.value)}

@@ -6,24 +6,32 @@ import { connectionStr } from "@/app/lib/db";
 import { restaurantSchema } from "@/app/lib/model/restaurants";
 
 export async function GET() {
-  await mongoose.connect(connectionStr);
-  const data = await restaurantSchema.find();
-  return NextResponse.json(data);
+  try {
+    await mongoose.connect(connectionStr);
+    const data = await restaurantSchema.find();
+    return NextResponse.json(data);
+  } catch (err) {
+    console.error(err.message);
+  }
 }
 
 export async function POST(request) {
-  let payload = await request.json();
-  let result;
-  await mongoose.connect(connectionStr);
-  let signUpFormData = new restaurantSchema(payload);
+  try {
+    let result;
+    let payload = await request.json();
+    await mongoose.connect(connectionStr);
+    let signUpFormData = new restaurantSchema(payload);
 
-  if (payload.login) {
-    result = await restaurantSchema.findOne({
-      email: payload.email,
-      password: payload.password,
-    });
-  } else {
-    result = await signUpFormData.save();
+    if (payload.login) {
+      result = await restaurantSchema.findOne({
+        email: payload.email,
+        password: payload.password,
+      });
+    } else {
+      result = await signUpFormData.save();
+    }
+    return NextResponse.json(result);
+  } catch (err) {
+    console.error(err.message);
   }
-  return NextResponse.json(result);
 }
