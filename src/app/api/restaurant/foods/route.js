@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const payload = await request.json();
-    await mongoose.connection(connectionStr);
-    const food = new foodSchema(payload);
+    let payload = await request.json();
+    await mongoose.connect(connectionStr);
+    let food = new foodSchema(payload);
     const response = await food.save();
     return NextResponse.json(response);
   } catch (err) {

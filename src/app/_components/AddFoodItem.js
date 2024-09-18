@@ -11,6 +11,7 @@ const AddFoodItem = () => {
       alert("Please fill out all Fields");
       return false;
     }
+    return true;
   };
 
   const handleAddFoodItem = async () => {
