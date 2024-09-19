@@ -8,13 +8,29 @@ import FoodItemList from "@/app/_components/FoodItemList";
 
 const Dashboard = () => {
   const [addItem, setAddItem] = useState(false);
+  const [dashboardVisibility, setDashboardVisibility] = useState(false);
 
   return (
     <>
       <RestaurantHeader />
-      <button onClick={() => setAddItem(true)}>Add Food</button>
-      <button>Dashboard</button>
-      {addItem ? <AddFoodItem /> : <FoodItemList />}
+      <button
+        onClick={() => {
+          setAddItem(true);
+          if (dashboardVisibility) setDashboardVisibility(false);
+        }}
+      >
+        Add Food
+      </button>
+      <button
+        onClick={() => {
+          setDashboardVisibility(true);
+          if (addItem) setAddItem(false);
+        }}
+      >
+        Dashboard
+      </button>
+      {addItem && <AddFoodItem />}
+      {dashboardVisibility && <FoodItemList />}
     </>
   );
 };

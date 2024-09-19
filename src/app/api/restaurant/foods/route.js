@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
+import { NextResponse } from "next/server";
+
 import { connectionStr } from "@/app/lib/db";
 import { foodSchema } from "@/app/lib/model/foodsModel";
-import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
@@ -12,6 +13,6 @@ export async function POST(request) {
     const response = await food.save();
     return NextResponse.json(response);
   } catch (err) {
-    console.error(err.message);
+    return NextResponse.json({ message: err.message });
   }
 }

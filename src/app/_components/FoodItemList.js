@@ -1,4 +1,50 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 const FoodItemList = () => {
+  const [foodItems, setFoodItems] = useState();
+
+  const router = useRouter();
+
+  const handleDeleteFoodItem = async (foodId) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/restaurant/foods/" + foodId,
+        {
+          method: "delete",
+        }
+      );
+      const data = await response.json();
+      if (response.status === 200 && data) {
+        alert("Food Item Deleted");
+        getAllFoodItems();
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const getAllFoodItems = async () => {
+    const getRestaurantId = JSON.parse(localStorage.getItem("restaurantUser"));
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/restaurant/foods/" + getRestaurantId._id
+      );
+      const data = await response.json();
+      if (response.status === 200 && data.message) {
+        setFoodItems(data.message);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllFoodItems();
+  }, []);
+
   return (
     <div>
       <h1>Food Items</h1>
@@ -14,17 +60,34 @@ const FoodItemList = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Pizza</td>
-            <td>300</td>
-            <td>Best Seller Pizza</td>
-            <td>Image</td>
-            <td>
-              <button>Delete</button>
-              <button>Edit</button>
-            </td>
-          </tr>
+          {foodItems?.map((foodItem, index) => {
+            return (
+              <tr key={foodItem._id}>
+                <td>{index + 1}</td>
+                <td>{foodItem.name}</td>
+                <td>{foodItem.price}</td>
+                <td>{foodItem.description}</td>
+                <td>
+                  <img
+                    style={{ height: "150px", width: "150px" }}
+                    src={foodItem.imagePath}
+                  />
+                </td>
+                <td>
+                  <button onClick={() => handleDeleteFoodItem(foodItem._id)}>
+                    Delete
+                  </button>
+                  <button
+                    onClick={() =>
+                      router.push(`dashboard/${foodItem._id}`)
+                    }
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

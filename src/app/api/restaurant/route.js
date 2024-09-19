@@ -11,7 +11,7 @@ export async function GET() {
     const data = await restaurantSchema.find();
     return NextResponse.json(data);
   } catch (err) {
-    console.error(err.message);
+    return NextResponse.json({ error: err.message });
   }
 }
 
@@ -32,6 +32,6 @@ export async function POST(request) {
     }
     return NextResponse.json(result);
   } catch (err) {
-    console.error(err.message);
+    return NextResponse.json({ error: err.message });
   }
 }
