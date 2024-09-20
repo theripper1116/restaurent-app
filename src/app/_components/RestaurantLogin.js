@@ -23,16 +23,16 @@ const RestaurantLogin = () => {
           }),
         });
         let data = await response.json();
-        if (response.status === 200 && data) {
+        if (!data.error) {
           alert("Login Successfull");
           delete data.password;
           localStorage.setItem("restaurantUser", JSON.stringify(data));
           router.push("/restaurant/dashboard");
-        } else {
-          alert("Wrong Email Id or Password");
-        }
+        } else if (response.status === 200 && !data) {
+          alert("Wrong Id or Password");
+        } else setError(data.error);
       } catch (err) {
-        setError(err.message);
+        console.error(err.message);
       }
     }
   };

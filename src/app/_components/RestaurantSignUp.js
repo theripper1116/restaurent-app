@@ -48,13 +48,15 @@ const RestaurantSignUp = () => {
           }),
         });
         let data = await response.json();
-        if (response.status === 200) {
+        if (response.status === 200 && !data.error) {
           delete data.password;
           localStorage.setItem("restaurantUser", JSON.stringify(data));
           router.push("/restaurant/dashboard");
+        } else {
+          setError(data.error);
         }
       } catch (err) {
-        setError(err);
+        console.error(err.message);
       }
     }
   };

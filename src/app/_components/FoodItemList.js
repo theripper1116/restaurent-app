@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 const FoodItemList = () => {
   const [foodItems, setFoodItems] = useState();
+  const [error, setError] = useState(false);
 
   const router = useRouter();
 
@@ -33,9 +34,9 @@ const FoodItemList = () => {
         "http://localhost:3000/api/restaurant/foods/" + getRestaurantId._id
       );
       const data = await response.json();
-      if (response.status === 200 && data.message) {
+      if (!data.error) {
         setFoodItems(data.message);
-      }
+      } else setError(data.error);
     } catch (err) {
       console.error(err.message);
     }
@@ -44,6 +45,8 @@ const FoodItemList = () => {
   useEffect(() => {
     getAllFoodItems();
   }, []);
+
+  if (error) return <h3>Failed to fetch data due to: {error}</h3>;
 
   return (
     <div>
@@ -78,9 +81,7 @@ const FoodItemList = () => {
                     Delete
                   </button>
                   <button
-                    onClick={() =>
-                      router.push(`dashboard/${foodItem._id}`)
-                    }
+                    onClick={() => router.push(`dashboard/${foodItem._id}`)}
                   >
                     Edit
                   </button>

@@ -30,8 +30,10 @@ export async function POST(request) {
     } else {
       result = await signUpFormData.save();
     }
-    return NextResponse.json(result);
+    if (result) {
+      return NextResponse.json(result);
+    } else return NextResponse.json({ error: "error" });
   } catch (err) {
-    return NextResponse.json({ error: err.message });
+    return NextResponse.json({ error: "User Not Found" });
   }
 }

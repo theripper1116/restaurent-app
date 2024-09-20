@@ -5,6 +5,7 @@ const AddFoodItem = () => {
   const [price, setPrice] = useState("");
   const [path, setPath] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState(false);
 
   const validateAddFoodFormData = () => {
     if (!name || !price || !path || !description) {
@@ -36,15 +37,17 @@ const AddFoodItem = () => {
             }
           );
           const data = await response.json();
-          if (response.status === 200) {
+          if (!data.message) {
             alert("Food Item Inserted successfully");
-          }
+          } else setError(data.message);
         } catch (err) {
           console.error(err.message);
         }
       }
     }
   };
+
+  if (error) return <h3>Food Item not saved due to: {error}</h3>;
 
   return (
     <div className="container">
