@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
+import { LOGO_URL } from "@/app/utils/constants/constants";
+
 const RestaurantHeader = () => {
   const [restaurantDetails, setRestaurantDetails] = useState();
   const router = useRouter();
@@ -29,7 +31,8 @@ const RestaurantHeader = () => {
       <div className="logo">
         <img
           style={{ width: 100 }}
-          src="https://img.freepik.com/premium-vector/picture-plate-with-picture-fire-it_981150-2098.jpg"
+          src={LOGO_URL}
+          alt={"restaurant-logo"}
         />
       </div>
       <ul>

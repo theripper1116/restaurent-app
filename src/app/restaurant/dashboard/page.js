@@ -1,10 +1,11 @@
 "use client";
 
-import RestaurantHeader from "@/app/_components/RestaurantHeader";
-import "./../style.css";
-import AddFoodItem from "@/app/_components/AddFoodItem";
 import { useState } from "react";
-import FoodItemList from "@/app/_components/FoodItemList";
+import "./../style.css";
+
+import RestaurantHeader from "@/app/_components/restaurantFlowComponents/RestaurantHeader";
+import AddFoodItem from "@/app/_components/restaurantFlowComponents/AddFoodItem";
+import FoodItemList from "@/app/_components/restaurantFlowComponents/FoodItemList";
 
 const Dashboard = () => {
   const [addItem, setAddItem] = useState(false);

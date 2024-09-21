@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-
 import "./style.css";
 
-import RestaurantHeader from "../_components/RestaurantHeader";
-import RestaurantLogin from "../_components/RestaurantLogin";
-import RestaurantSignUp from "../_components/RestaurantSignUp";
-import RestaurantFooter from "../_components/RestaurantFooter";
+import RestaurantHeader from "../_components/restaurantFlowComponents/RestaurantHeader";
+import RestaurantLogin from "../_components/restaurantFlowComponents/RestaurantLogin";
+import RestaurantSignUp from "../_components/restaurantFlowComponents/RestaurantSignUp";
+import Footer from "../_components/restaurantFlowComponents/Footer";
 
 const Restaurent = () => {
   const [login, setLogin] = useState(true);
@@ -29,7 +28,7 @@ const Restaurent = () => {
           </button>
         </div>
       </div>
-      <RestaurantFooter />
+      <Footer />
     </>
   );
 };

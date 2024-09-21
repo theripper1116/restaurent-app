@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import validateSignUpFormData from "../utils/validations/validateSignUpFormData";
+import validateSignUpFormData from "@/app/utils/validations/validateSignUpFormData";
+
 // import useSaveRestaurantInfo from "../utils/mongoDB/useSaveRestaurantInfo";
 
 const RestaurantSignUp = () => {

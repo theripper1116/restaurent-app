@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import validateSignInFormData from "../utils/validations/validateSignInFormData";
+
+import validateSignInFormData from "@/app/utils/validations/validateSignInFormData";
 
 const RestaurantLogin = () => {
   const [email, setEmail] = useState("");

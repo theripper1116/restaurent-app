@@ -1,5 +1,12 @@
+import CustomerHeader from "./_components/foodOrderingFlowComponents/CustomerHeader";
+import Footer from "./_components/restaurantFlowComponents/Footer";
+
 export default function Home() {
   return (
-    <h1>Restaurent app</h1>
+    <>
+      <CustomerHeader />
+      <h1>Restaurent app</h1>
+      <Footer />
+    </>
   );
 }

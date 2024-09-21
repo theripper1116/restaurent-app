@@ -74,6 +74,7 @@ const FoodItemList = () => {
                   <img
                     style={{ height: "150px", width: "150px" }}
                     src={foodItem.imagePath}
+                    alt={foodItem.name}
                   />
                 </td>
                 <td>
