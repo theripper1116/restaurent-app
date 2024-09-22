@@ -23,13 +23,13 @@ export async function PUT(request, { params: { foodItemId } }) {
   try {
     const payload = await request.json();
     await mongoose.connect(connectionStr);
-    const updatedFoodItem = await foodSchema.updateOne(
+    const response = await foodSchema.updateOne(
       {
         _id: foodItemId,
       },
       payload
     );
-    if (updatedFoodItem) return NextResponse.json(updatedFoodItem);
+    if (response) return NextResponse.json(response);
   } catch (err) {
     return NextResponse.json({ error: err.message });
   }

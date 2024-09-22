@@ -17,21 +17,21 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    let result;
+    let response;
     let payload = await request.json();
     await mongoose.connect(connectionStr);
     let signUpFormData = new restaurantSchema(payload);
 
     if (payload.login) {
-      result = await restaurantSchema.findOne({
+      response = await restaurantSchema.findOne({
         email: payload.email,
         password: payload.password,
       });
     } else {
-      result = await signUpFormData.save();
+      response = await signUpFormData.save();
     }
-    if (result) {
-      return NextResponse.json(result);
+    if (response) {
+      return NextResponse.json(response);
     } else return NextResponse.json({ error: "error" });
   } catch (err) {
     return NextResponse.json({ error: "User Not Found" });

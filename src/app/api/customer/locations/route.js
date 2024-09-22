@@ -7,9 +7,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await mongoose.connect(connectionStr);
-    const result = await restaurantSchema.find();
+    const response = await restaurantSchema.find();
     const cityList = new Set();
-    result.forEach((restaurantDetails) => {
+    response.forEach((restaurantDetails) => {
       cityList.add(
         restaurantDetails.city.charAt(0).toUpperCase() +
           restaurantDetails.city.slice(1)

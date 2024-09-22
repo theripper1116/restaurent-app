@@ -43,7 +43,7 @@ const RestaurantSignUp = () => {
             email,
             password,
             name,
-            city,
+            city: city.toLowerCase(),
             address,
             contact,
           }),
