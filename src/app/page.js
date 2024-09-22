@@ -32,9 +32,14 @@ export default function Home() {
     }
   };
 
-  const fetchRestaurants = async () => {
+  const fetchRestaurants = async (restaurantName) => {
     try {
-      let response = await fetch("http://localhost:3000/api/customer");
+      let response;
+      if (restaurantName) {
+        response = await fetch("http://localhost:3000/api/customer");
+      } else {
+        response = await fetch("http://localhost:3000/api/customer");
+      }
       let data = await response.json();
       if (response.status === 200 && (!data.message || !data.error))
         setRestaurantList(data);
