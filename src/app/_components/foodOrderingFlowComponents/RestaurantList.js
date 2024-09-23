@@ -1,13 +1,13 @@
 import { useRouter } from "next/navigation";
 
 export const RestaurantList = ({ restaurantDetail }) => {
-  const { name, contact, city, address, email } = restaurantDetail;
+  const { name, contact, city, address, email, _id } = restaurantDetail;
   const router = useRouter();
   return (
     <div
       className="restaurant-wrapper"
       onClick={() => {
-        router.push(`/restaurantDetail/${name}`);
+        router.push(`/restaurantDetail/${name}?restaurantId=${_id}`);
       }}
     >
       <div className="heading-wrapper">
