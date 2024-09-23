@@ -9,9 +9,10 @@ export async function GET({ nextUrl: { searchParams } }) {
   try {
     await mongoose.connect(connectionStr);
     let response;
-    if (searchParams.get("location")) {
+    const selectedRestaurant = searchParams.get("restaurantName");
+    if (selectedRestaurant) {
       response = await restaurantSchema.find({
-        city: searchParams.get("location").toLowerCase(),
+        name: selectedRestaurant,
       });
     } else {
       response = await restaurantSchema.find();

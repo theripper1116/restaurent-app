@@ -34,6 +34,8 @@ const RestaurantDetailPage = ({
     fetchRestaurantDetails();
   }, []);
 
+  if (error) <h2>{error}</h2>;
+
   return (
     <div>
       <CustomerHeader />

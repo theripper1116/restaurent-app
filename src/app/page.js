@@ -16,6 +16,8 @@ export default function Home() {
   const [restaurantlist, setRestaurantList] = useState();
   const [error, setError] = useState();
 
+  let selectedRestaurant;
+
   const fetchLocations = async () => {
     try {
       const response = await fetch(
@@ -32,11 +34,15 @@ export default function Home() {
     }
   };
 
-  const fetchRestaurants = async (restaurantName) => {
+  const fetchRestaurants = async (selectedRestaurantName) => {
     try {
       let response;
-      if (restaurantName) {
-        response = await fetch("http://localhost:3000/api/customer");
+      console.log("inside function");
+      if (selectedRestaurantName) {
+        console.log("inside if");
+        response = await fetch(
+          `http://localhost:3000/api/customer?restaurantName=${selectedRestaurantName}`
+        );
       } else {
         response = await fetch("http://localhost:3000/api/customer");
       }
@@ -51,14 +57,16 @@ export default function Home() {
     }
   };
 
-  console.log(restaurantlist);
-
   useEffect(() => {
     fetchLocations();
-    fetchRestaurants();
-  }, []);
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    fetchRestaurants(selectedRestaurant);
+  }, [selectedRestaurant]);
 
   if (error) return <h3>{error}</h3>;
+
   return (
     <>
       <CustomerHeader />
@@ -71,13 +79,18 @@ export default function Home() {
             placeholder="Select place"
             value={selectedLocation}
             onClick={() => setVisibilityForRestaurantLocations(true)}
-            onBlur={() => setVisibilityForRestaurantLocations(false)}
           />
           {visibilityForRestaurantLocations && (
             <ul className="location-list">
               {restaurantLocations?.map((cityName, index) => {
                 return (
-                  <li onClick={() => setSelectedLocation(cityName)} key={index}>
+                  <li
+                    onClick={() => {
+                      setSelectedLocation(cityName);
+                      setVisibilityForRestaurantLocations(false);
+                    }}
+                    key={index}
+                  >
                     {cityName}
                   </li>
                 );
@@ -89,6 +102,7 @@ export default function Home() {
             type="text"
             className="search-input"
             placeholder="Enter Food or Restaurant Name"
+            onChange={(event) => (selectedRestaurant = event.target.value)}
           />
         </div>
       </div>
