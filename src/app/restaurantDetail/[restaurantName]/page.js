@@ -30,6 +30,39 @@ const RestaurantDetailPage = ({
     }
   };
 
+  const addToCart = (foodItem) => {
+    const foodItemList = JSON.parse(localStorage.getItem("cartItems"));
+    if (
+      foodItemList &&
+      foodItemList[0].restaurantId === foodItem.restaurantId
+    ) {
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify([...foodItemList, foodItem])
+      );
+    } else {
+      localStorage.setItem("cartItems", JSON.stringify([foodItem]));
+    }
+  };
+
+  const removeFromCart = (foodItem) => {
+    const getCartItems = JSON.parse(localStorage.getItem("cartItems"));
+    if (getCartItems) {
+      if (getCartItems.length > 1) {
+        localStorage.setItem(
+          "cartItems",
+          JSON.stringify(
+            getCartItems.filter((cartItem) => cartItem._id !== foodItem._id)
+          )
+        );
+      } else if (getCartItems.length === 1) {
+        localStorage.removeItem("cartItems");
+      }
+    } else {
+      alert("No item found in Cart");
+    }
+  };
+
   useEffect(() => {
     fetchRestaurantDetails();
   }, []);
@@ -38,7 +71,9 @@ const RestaurantDetailPage = ({
 
   return (
     <div>
-      <CustomerHeader />
+      <CustomerHeader
+        cartItemLength={JSON.parse(localStorage.getItem("cartItems"))?.length}
+      />
       <div className="restaurant-page-banner">
         <h1>{decodeURI(restaurantName)}</h1>
       </div>
@@ -50,7 +85,13 @@ const RestaurantDetailPage = ({
       <div className="food-item-wrapper">
         {foodItemList?.length >= 1 ? (
           foodItemList.map((foodItem) => (
-            <DisplayFoodItem key={foodItem._id} foodItem={foodItem} />
+            <DisplayFoodItem
+              key={foodItem._id}
+              foodItem={foodItem}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              isCart={false}
+            />
           ))
         ) : (
           <h1>No Food Items Found!!</h1>

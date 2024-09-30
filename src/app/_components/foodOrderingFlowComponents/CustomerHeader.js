@@ -1,7 +1,7 @@
 import { LOGO_URL } from "@/app/utils/constants/constants";
 import Link from "next/link";
 
-const CustomerHeader = () => {
+const CustomerHeader = ({ cartItemLength }) => {
   return (
     <div className="header-wrapper">
       <div className="logo">
@@ -18,7 +18,7 @@ const CustomerHeader = () => {
           <Link href="/">Sign Up</Link>
         </li>
         <li>
-          <Link href="/">Cart(0)</Link>
+          <Link href="/cart">Cart({cartItemLength ? cartItemLength : 0})</Link>
         </li>
         <li>
           <Link href="/">Add Restaurant</Link>
