@@ -44,12 +44,14 @@ const DisplayFoodItem = ({ foodItem, addToCart, removeFromCart, isCart }) => {
           <div className="list-item-block-1">
             <img style={{ width: "100px" }} src={imagePath} />
           </div>
-          <div  className="list-item-block-2">
+          <div className="list-item-block-2">
             <div>{name}</div>
             <div className="description">{description}</div>
-            <button>Remove from Cart</button>
+            <button onClick={() => removeFromCart(foodItem)}>
+              Remove from Cart
+            </button>
           </div>
-          <div  className="list-item-block-3">Price : {price}</div>
+          <div className="list-item-block-3">Price : {price}</div>
         </div>
       )}
     </>

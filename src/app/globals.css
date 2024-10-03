@@ -211,3 +211,32 @@ table > td > button {
 .list-item-block-3 {
   width: 20%;
 }
+
+.total-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border-bottom: 1px solid orange;
+  padding-bottom: 20px;
+}
+
+.total-wrapper .row {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20%;
+  margin-right: 20%;
+  font-size: 20px;
+  color: orange;
+  font-weight: bold;
+}
+
+.order-now-button {
+  width: 20%;
+  margin-left: 40%;
+  border: none;
+  background-color: orange;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
